@@ -21,9 +21,9 @@ If a `swarm-ready` skill is installed, load it. Otherwise execute the documented
 
 ## Repository starting point
 
-Read: [AGENTS.md](AGENTS.md), [README.md](README.md), [pyproject.toml](pyproject.toml), [docs](docs), [tests](tests), [scripts](scripts).
+Read the [repository instructions](AGENTS.md), [README](README.md) and [package declaration](pyproject.toml).
 
-Select one reproducible model or environment experiment under the existing README and AGENTS contract.
+For separately scoped model or environment work, select one reproducible experiment under the existing README and AGENTS contract.
 
 Hold dataset, seed and evaluation budget fixed. Report raw task outcomes alongside shaped rewards; preserve the documented failure cases and negative controls.
 
@@ -41,11 +41,35 @@ The base above is an inspection snapshot, not a permanent working branch. Refres
 
 ## Verification starting point
 
-| Declared command | Source and limit |
-| --- | --- |
-| `pytest -q` | AGENTS.md; after declared environment setup |
+For documentation-only changes, run from the repository root with Git:
 
-These commands were read from source, not executed for this documentation change. Build, syntax and lint success are not functional acceptance. Confirm the current setup, lockfile, hooks, required services and focused test scope before running.
+```sh
+git --no-lazy-fetch -c core.fsmonitor=false ls-files --error-unmatch -- \
+  AGENTS.md SWARM_READY.md README.md pyproject.toml \
+  jevlike/data.py jevlike/train.py jevlike/eval.py jevlike/predict.py jevlike/vision.py \
+  examples/doom/README.md examples/chess/README.md &&
+  git --no-lazy-fetch -c core.fsmonitor=false diff --no-ext-diff --no-textconv --check HEAD -- \
+    AGENTS.md SWARM_READY.md
+```
+
+Expect eleven tracked paths and no whitespace diagnostics. An unmatched path
+or a whitespace error fails the check. For a committed patch, replace `HEAD`
+with the review base and candidate SHAs. Read the linked headings and compare
+the README CLI names with `[project.scripts]` in `pyproject.toml`. The Git
+checks do not validate links or import the CLI modules.
+
+The [README quickstart](README.md#quickstart) installs the package and runs the
+text model, generating data and a checkpoint. It remains the release test for
+quickstart command changes. The [installation and tests](AGENTS.md#install-and-verify)
+are separate; the package's default pytest discovery points to `tests`, not the
+separate game smoke checks documented there. Keep the docs review offline: no
+dependencies, data or model downloads, checkpoint loads, training, inference,
+game runs, or film rendering.
+
+Preserve the [text experiment limits](README.md#what-to-expect), the
+[Doom screen-dependence controls](examples/doom/README.md#audit-screen-dependence),
+and the [chess checkpoint limitations](examples/chess/README.md#results).
+Passing a docs check does not reproduce those results or qualify the models.
 
 ## Required handoff result
 

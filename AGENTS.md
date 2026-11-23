@@ -4,6 +4,8 @@ Jevlike is a small PyTorch package for one-pass choice models. The text model ta
 
 Keep the public package self-contained. Do not add machine-specific paths, private data, credentials, run logs or copyrighted audio. Keep downloaded datasets and generated runs out of git. Preserve the JSONL text format in the top-level README and the checkpoint fields used by the examples.
 
+For a swarm handoff or documentation-only review, start with the [offline checks](SWARM_READY.md#verification-starting-point).
+
 ## Install and verify
 
 ```sh
